@@ -6,7 +6,7 @@ import unittest
 from contact import Contact
 
 
-class Contact(unittest.TestCase):
+class Test_Contact(unittest.TestCase):
     def setUp(self):
         self.wd = webdriver.Chrome()
         self.wd.implicitly_wait(30)
