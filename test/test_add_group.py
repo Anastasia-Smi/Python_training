@@ -17,9 +17,9 @@ def app(request):
 
 def test_add_group(app):
 
-       app.open_home_page()
+       app.group.open_home_page()
        app.session.login( username="admin", password="secret")
-       app.open_group_page()
-       app.create_group( Group(name="group_1", header="header", footer="footer"))
-       app.return_to_group_page()
+       app.group.open_group_page()
+       app.group.create(Group(name="group_1", header="header", footer="footer"))
+       app.group.return_to_group_page()
        app.session.logout()
