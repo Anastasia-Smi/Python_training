@@ -3,8 +3,8 @@ import datetime
 
 import pytest
 
-from Application import Application
-from contact import Contact
+from fixture.Application import Application
+from model.contact import Contact
 
 
 @pytest.fixture
