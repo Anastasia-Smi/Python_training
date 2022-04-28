@@ -1,15 +1,9 @@
 # -*- coding: utf-8 -*-
 import datetime
-import pytest
-from fixture.Application import Application
 from model.contact import Contact
 
 
-@pytest.fixture
-def app(request):
-    fixture = Application()
-    request.addfinalizer(fixture.destroy)
-    return fixture
+
 
 def test_add_contact(app):
         app.contact.open_home_page()

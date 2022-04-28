@@ -31,3 +31,9 @@ class GroupHelper:
     def open_home_page(self):
         wd = self.app.wd
         wd.get("http://localhost/addressbook/index.php")
+
+    def delete_first_group(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/group.php")
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_name("delete").click()
