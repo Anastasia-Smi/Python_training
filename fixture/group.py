@@ -12,15 +12,7 @@ class GroupHelper:
         wd.get("http://localhost/addressbook/group.php")
         wd.find_element_by_name("new").click()
         # fill in group form
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
+        self.fill_in_group_form(group)
         # submit
         wd.find_element_by_name("submit").click()
 
@@ -40,18 +32,35 @@ class GroupHelper:
 
     def edit(self,group):
         wd = self.app.wd
+        self.select_first_group()
+        self.fill_in_group_form(group)
+        wd.find_element_by_name("update").click()
+
+    def fill_in_group_form(self, group):
+        wd = self.app.wd
+        self.change_field("group_name", group.name)
+        self.change_field("group_header", group.header)
+        self.change_field("group_footer", group.footer)
+
+
+    def change_field(self, field_name, text):
+        wd = self.app.wd
+        if text is not None:
+            wd.find_element_by_name(field_name).click()
+            wd.find_element_by_name(field_name).clear()
+            wd.find_element_by_name(field_name).send_keys(text)
+
+    def select_first_group(self):
+        wd = self.app.wd
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("edit").click()
-        wd.find_element_by_name("group_name").click()
-        wd.find_element_by_name("group_name").clear()
-        wd.find_element_by_name("group_name").send_keys(group.name)
-        wd.find_element_by_name("group_header").click()
-        wd.find_element_by_name("group_header").clear()
-        wd.find_element_by_name("group_header").send_keys(group.header)
-        wd.find_element_by_name("group_footer").click()
-        wd.find_element_by_name("group_footer").clear()
-        wd.find_element_by_name("group_footer").send_keys(group.footer)
-        #update
+
+    def modify_first_group(self,new_group_data):
+        wd = self.app.wd
+        self.select_first_group()
+
+        self.fill_in_group_form(new_group_data)
+
         wd.find_element_by_name("update").click()
 
 
