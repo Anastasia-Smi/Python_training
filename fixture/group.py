@@ -26,15 +26,19 @@ class GroupHelper:
 
     def delete_first_group(self):
         wd = self.app.wd
+        self.open_group_page()
         wd.get("http://localhost/addressbook/group.php")
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_name("delete").click()
+        self.return_to_group_page()
 
     def edit(self,group):
         wd = self.app.wd
+        self.open_group_page()
         self.select_first_group()
         self.fill_in_group_form(group)
         wd.find_element_by_name("update").click()
+        self.return_to_group_page()
 
     def fill_in_group_form(self, group):
         wd = self.app.wd
@@ -57,11 +61,17 @@ class GroupHelper:
 
     def modify_first_group(self,new_group_data):
         wd = self.app.wd
+        self.open_group_page()
         self.select_first_group()
-
         self.fill_in_group_form(new_group_data)
 
         wd.find_element_by_name("update").click()
+        self.return_to_group_page()
+
+    def count(self):
+        wd = self.app.wd
+        self.open_group_page()
+        return len(wd.find_elements_by_name("selected[]"))
 
 
 

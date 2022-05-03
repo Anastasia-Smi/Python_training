@@ -3,8 +3,10 @@ import datetime
 from model.contact import Contact
 
 
-def test_add_contact(app):
+def test_edit_contact(app):
 
+        if app.contact.count() == 0:
+                app.contact.create(Contact(firstname=f"{datetime.datetime.now().strftime('%M')}name"))
         app.contact.edit(Contact(firstname= f"{datetime.datetime.now().strftime('%M')}name",
                                             lastname =f"{datetime.datetime.now().strftime('%M')}lastname",
                                             address=f"{datetime.datetime.now().strftime('%M')}address",
