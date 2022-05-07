@@ -76,6 +76,7 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         wd.find_element_by_name("selected[]").click()
         wd.find_element_by_xpath("//div/input[@value ='Delete']").click()
+        wd.find_element_by_link_text("home page").click()
 
     def count(self):
         wd = self.app.wd
