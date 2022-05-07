@@ -1,7 +1,6 @@
 class ContactHelper:
-    def __init__(self,app):
+    def __init__(self, app):
         self.app = app
-
 
     def return_to_contact_page(self):
         wd = self.app.wd
@@ -20,9 +19,7 @@ class ContactHelper:
         self.submit_add_contact_form()
         self.return_to_contact_page()
 
-
     def fill_in_contact_form(self, contact):
-
         wd = self.app.wd
 
         wd.find_element_by_name("firstname").click()
@@ -47,8 +44,6 @@ class ContactHelper:
         wd.find_element_by_name("email").click()
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
-
-
 
     def edit(self, contact):
         # fill in add contact form
@@ -80,6 +75,5 @@ class ContactHelper:
 
     def count(self):
         wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
         return len(wd.find_elements_by_name("selected[]"))
-
-
