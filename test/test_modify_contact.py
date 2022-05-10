@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 import datetime
 from model.contact import Contact
+from random import randrange
 
-
-def test_edit_contact(app):
-    old_contacts = app.contact.get_contact_list()
+def test_modify_random_contact(app):
     contact = Contact(firstname=f"{datetime.datetime.now().strftime('%M')}name",
                       lastname=f"{datetime.datetime.now().strftime('%M')}lastname",
                       address=f"{datetime.datetime.now().strftime('%M')}address",
                       home_phone=f"{datetime.datetime.now().strftime('%M%S')}",
                       email=f"{datetime.datetime.now().strftime('%M')}email@gmail.com")
-    contact.id = old_contacts[0].id
+
     if app.contact.count() == 0:
         app.contact.add(contact)
-    app.contact.edit(contact)
+    old_contacts = app.contact.get_contact_list()
+    index = randrange(len(old_contacts))
+    contact.id = old_contacts[index].id
+    app.contact.edit(index, contact)
     assert len(old_contacts) == app.contact.count()
     new_contacts = app.contact.get_contact_list()
-    old_contacts[0] =contact
+    old_contacts[index] =contact
     assert sorted(old_contacts, key = Contact.id_or_max)== sorted(new_contacts, key=Contact.id_or_max)
 

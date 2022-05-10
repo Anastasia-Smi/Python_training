@@ -5,24 +5,16 @@ class ContactHelper:
     def __init__(self, app):
         self.app = app
 
+    # NAVIGATION
+    def open_home_page(self):
+        wd = self.app.wd
+        wd.get("http://localhost/addressbook/index.php")
+
     def return_to_contact_page(self):
         wd = self.app.wd
         wd.find_element_by_link_text("home page").click()
 
-    def submit_add_contact_form(self):
-        # submit contact
-        wd = self.app.wd
-        wd.find_element_by_name("submit").click()
-
-    def add(self, contact):
-        # fill in add contact form
-        wd = self.app.wd
-        self.click_add_contact()
-        self.fill_in_contact_form(contact)
-        self.submit_add_contact_form()
-        self.return_to_contact_page()
-        self.contact_cache = None
-
+    # GENERAL
     def fill_in_contact_form(self, contact):
         wd = self.app.wd
 
@@ -49,40 +41,10 @@ class ContactHelper:
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
 
-    def edit(self, contact):
-        # fill in add contact form
-        wd = self.app.wd
-
-        wd.find_element_by_link_text("home").click()
-        wd.find_element_by_xpath("//tbody/tr/td[8]").click()
-
-        self.fill_in_contact_form(contact)
-
-        wd.find_element_by_name("update").click()
-        self.return_to_contact_page()
-        self.contact_cache = None
-
-    def click_add_contact(self):
-        # go to add contact page
-        wd = self.app.wd
-        wd.find_element_by_link_text("add new").click()
-
-    def open_home_page(self):
-        wd = self.app.wd
-        wd.get("http://localhost/addressbook/index.php")
-
-    def delete(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
-        wd.find_element_by_name("selected[]").click()
-        wd.find_element_by_xpath("//div/input[@value ='Delete']").click()
-        wd.find_element_by_link_text("home page").click()
-        self.contact_cache = None
-
     def count(self):
-        wd = self.app.wd
-        wd.find_element_by_link_text("home").click()
-        return len(wd.find_elements_by_name("selected[]"))
+            wd = self.app.wd
+            wd.find_element_by_link_text("home").click()
+            return len(wd.find_elements_by_name("selected[]"))
 
     contact_cache = None
 
@@ -98,3 +60,52 @@ class ContactHelper:
                 firstname = element.find_element_by_xpath(".//td[3]").text
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname, id=id))
         return list(self.contact_cache)
+
+    # ADD
+    def submit_add_contact_form(self):
+        # submit contact
+        wd = self.app.wd
+        wd.find_element_by_name("submit").click()
+
+    def add(self, contact):
+        # fill in add contact form
+        wd = self.app.wd
+        self.click_add_contact()
+        self.fill_in_contact_form(contact)
+        self.submit_add_contact_form()
+        self.return_to_contact_page()
+        self.contact_cache = None
+
+    def click_add_contact(self):
+        # go to add contact page
+        wd = self.app.wd
+        wd.find_element_by_link_text("add new").click()
+
+    # EDIT
+    def edit(self, index, contact):
+        # fill in add contact form
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+        wd.find_elements_by_xpath("//tbody/tr/td[8]")[index].click()
+        self.fill_in_contact_form(contact)
+        wd.find_element_by_name("update").click()
+        self.return_to_contact_page()
+        self.contact_cache = None
+
+    # DELETE
+    def delete(self):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+        wd.find_element_by_name("selected[]").click()
+        wd.find_element_by_xpath("//div/input[@value ='Delete']").click()
+        wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
+
+    def delete_by_index(self,index):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+        wd.find_elements_by_name("selected[]")[index].click()
+        wd.find_element_by_xpath("//div/input[@value ='Delete']").click()
+        wd.find_element_by_link_text("home page").click()
+        self.contact_cache = None
+
