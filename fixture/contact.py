@@ -58,9 +58,11 @@ class ContactHelper:
                 id = element.find_element_by_xpath(".//td/input[@type='checkbox']").get_attribute("value")
                 lastname = element.find_element_by_xpath(".//td[2]").text
                 firstname = element.find_element_by_xpath(".//td[3]").text
+                address = element.find_element_by_xpath(".//td[4]").text
                 all_phones= element.find_element_by_xpath(".//td[6]").text
                 all_emails= element.find_element_by_xpath(".//td[5]").text
                 self.contact_cache.append(Contact(lastname=lastname, firstname=firstname,
+                                                  address= address,
                                                  all_phones_from_home_page=all_phones,
                                                   all_emails_from_home_page=all_emails,
                                                   id=id))
@@ -72,6 +74,7 @@ class ContactHelper:
         wd.find_elements_by_xpath("//tbody/tr/td[8]")[index].click()
         firstname = wd.find_element_by_name("firstname").get_attribute("value")
         lastname = wd.find_element_by_name("lastname").get_attribute("value")
+        address = wd.find_element_by_name("address").get_attribute("value")
         id = wd.find_element_by_name("id").get_attribute("value")
         home_phone = wd.find_element_by_name("home").get_attribute("value")
         work_phone = wd.find_element_by_name("work").get_attribute("value")
@@ -79,7 +82,8 @@ class ContactHelper:
         e_mail = wd.find_element_by_name("email").get_attribute("value"),
         e_mail_2= wd.find_element_by_name("email2").get_attribute("value"),
         e_mail_3= wd.find_element_by_name("email3").get_attribute("value"),
-        return Contact(firstname= firstname, lastname= lastname, id=id,
+        return Contact(firstname= firstname, lastname= lastname,
+                       address= address, id=id,
                        home_phone=home_phone, work_phone=work_phone,
                        mobile_phone=mobile_phone,e_mail =e_mail,
                        e_mail_2 =e_mail_2,e_mail_3 =e_mail_3,)

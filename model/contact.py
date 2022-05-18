@@ -24,7 +24,12 @@ class Contact:
 
 #method returns a string containing a printable representation of an object
     def  __repr__(self):
-        return "%s%s%s" %(self.id, self.lastname, self.firstname)
+        return "%s%s%s%s%s%s%s%s%s%s" %(self.id, self.lastname, self.firstname,self.address,
+                                       self.home_phone,self.work_phone,self.mobile_phone,
+                                       self.email,self.e_mail_2,self.e_mail_3
+                                       )
+
+
 
     def __eq__(self,other):
         return (self.id is None or other.id is None or self.id == other.id)\
