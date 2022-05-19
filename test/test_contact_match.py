@@ -35,6 +35,6 @@ def merge_phones_like_on_home_page(contact):
 
 def merge_emails_like_on_home_page(contact):
     return "\n".join(map(str,filter(lambda x: x != "",
-                                    map(lambda x: clear_email(str(x)),
+                                    #map(lambda x: clear_email(str(x)),
                              [contact.e_mail, contact.e_mail_2,
-                                       contact.e_mail_3]))))
+                                       contact.e_mail_3])))
