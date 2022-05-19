@@ -15,9 +15,9 @@ class Contact:
         self.mobile_phone= mobile_phone
         self.all_phones_from_home_page = all_phones_from_home_page
         self.email = email
-        self.e_mail =e_mail,
-        self.e_mail_2 = e_mail_2,
-        self.e_mail_3 = e_mail_3,
+        self.e_mail =e_mail
+        self.e_mail_2 = e_mail_2
+        self.e_mail_3 = e_mail_3
         self.all_emails_from_home_page = all_emails_from_home_page
         self.id = id
 

@@ -78,10 +78,10 @@ class ContactHelper:
         id = wd.find_element_by_name("id").get_attribute("value")
         home_phone = wd.find_element_by_name("home").get_attribute("value")
         work_phone = wd.find_element_by_name("work").get_attribute("value")
-        mobile_phone = wd.find_element_by_name("mobile").get_attribute("value"),
-        e_mail = wd.find_element_by_name("email").get_attribute("value"),
-        e_mail_2= wd.find_element_by_name("email2").get_attribute("value"),
-        e_mail_3= wd.find_element_by_name("email3").get_attribute("value"),
+        mobile_phone = wd.find_element_by_name("mobile").get_attribute("value")
+        e_mail = wd.find_element_by_name("email").get_attribute("value")
+        e_mail_2= wd.find_element_by_name("email2").get_attribute("value")
+        e_mail_3= wd.find_element_by_name("email3").get_attribute("value")
         return Contact(firstname= firstname, lastname= lastname,
                        address= address, id=id,
                        home_phone=home_phone, work_phone=work_phone,
