@@ -7,36 +7,65 @@ import json
 import os.path
 import importlib
 import jsonpickle
+from fixture.session import SessionHelper
+from fixture.db import DbFixture
+from fixture.group import Group
 fixture = None
 target =None
 
 
+def load_config(file):
+    global target
+    if target is None:
+        f = os.path.join(os.path.dirname(os.path.abspath(__file__)), file)
+        with open(f) as f:
+            target = json.load(f)
+    return target
+
 @pytest.fixture
 def app(request):
     global fixture
-    global target
     browser = request.config.getoption("--browser")
-    if target is None:
-        f=os.path.join(os.path.dirname(os.path.abspath(__file__)), request.config.getoption("--target"))
-        with open(f) as f:
-            target = json.load(f)
+    web_config = load_config(request.config.getoption("--target"))['web']
     if fixture is None or fixture.is_valid():
-        fixture = Application(browser=browser, base_url=target['baseUrl'])
-    fixture.session.ensure_login(username=target['username'], password=target['password'])
+        fixture = Application(browser=browser, base_url=web_config['baseUrl'])
+    fixture.session.ensure_login(username=web_config['username'], password=web_config['password'])
     return fixture
+
+@pytest.fixture(scope="session")
+def db(request):
+   db_config = load_config(request.config.getoption("--target"))['db']
+   dbfixture=DbFixture(host=db_config['host'],user=  db_config['user'],
+                       name=db_config['name'],
+                       password= db_config['password'])
+   def fin():
+        dbfixture.destroy()
+   request.addfinalizer(fin)
+   return dbfixture
+
 
 @pytest.fixture(scope="session", autouse=True)
 def stop(request):
-     def fin():
+    def fin():
         fixture.session.ensure_logout()
         fixture.destroy()
-     request.addfinalizer(fin)
-     return fixture
 
+    request.addfinalizer(fin)
+    return fixture
+
+@pytest.fixture
+def check_ui(request):
+    return request.config.getoption("--check_ui")
+
+
+@pytest.fixture
+def group():
+    return Group(name="name", header= "header", footer= "footer", id= "id")
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
     parser.addoption("--target", action="store", default="target.json")
+    parser.addoption("--check_ui", action="store_true")
 
 def pytest_generate_tests(metafunc):
     for fixture in metafunc.fixturenames:

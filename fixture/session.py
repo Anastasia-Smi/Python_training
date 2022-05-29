@@ -5,7 +5,6 @@ class SessionHelper:
 
     def login(self, username, password):
         wd = self.app.wd
-        # login
         wd.get("http://localhost/addressbook/index.php")
         wd.find_element_by_name("user").click()
         wd.find_element_by_name("user").clear()
