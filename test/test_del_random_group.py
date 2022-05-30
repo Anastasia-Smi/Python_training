@@ -16,7 +16,7 @@ def test_del_randome_group(app):
        assert old_groups == new_groups
 
 
-def test_del_randome_group_db(app,db,check_ui):
+def test_del_random_group_db(app,db,check_ui):
        if len(db.get_group_list()) == 0:
               app.group.create(Group(name="test"))
        old_groups = db.get_group_list()

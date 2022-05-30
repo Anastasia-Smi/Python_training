@@ -16,9 +16,9 @@ def test_add_group(app, group):
 
 def test_add__group_db(app, db, group,  check_ui):
     old_groups = db.get_group_list()
-    new_group= app.group.create(Group(name="test"))
+    group= app.group.create(Group(name="test"))
     new_groups = db.get_group_list()
-    old_groups.append(new_group)
+    old_groups.append(group)
     assert old_groups == new_groups
     if check_ui:
         assert sorted(new_groups, key=Group.id_or_max) == sorted(app.group.get_group_list(), key=Group.id_or_max)

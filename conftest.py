@@ -60,7 +60,7 @@ def check_ui(request):
 
 @pytest.fixture
 def group():
-    return Group(name="name", header= "header", footer= "footer", id= "id")
+     return Group(name="name", header= "header", footer= "footer", id= str("id"))
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")
