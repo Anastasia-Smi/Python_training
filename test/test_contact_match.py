@@ -1,6 +1,7 @@
 from model.contact import Contact
 import datetime
 import re
+import functools
 
 def test_contacts_on_home_page(app):
     contact_from_home_page = app.contact.get_contact_list()[0]
@@ -16,11 +17,10 @@ def test_contacts_on_home_page(app):
 def test_contacts_ui_match_contacts_db(app,db):
     if len(db.get_contact_list()) == 0:
         app.contact.add(Contact(firstname=f"{datetime.datetime.now().strftime('%M')}name"))
-    contacts_ui = app.contact.get_contact_list()
-    contacts_db= db.get_contact_list()
-    assert sorted(contacts_ui, key=Contact.id_or_max) == sorted(contacts_db, key=Contact.id_or_max)
 
-
+    contacts_ui = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
+    contacts_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
+    assert functools.reduce(lambda x, y: x and y, map(lambda p, q: p == q, contacts_ui, contacts_db), True)
 
 
 
