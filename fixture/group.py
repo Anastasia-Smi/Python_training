@@ -76,8 +76,9 @@ class GroupHelper:
         wd = self.app.wd
         groups= self.get_group_list()
         group_id = groups[index].id
-        wd.find_element_by_xpath("//div/select[@name='to_group']").click()
-        wd.select.select_by_value(group_id)
+        #wd.find_element_by_css_selector(".right:last-child").click()
+        wd.find_element_by_xpath("//div[@class='right']/select").click()
+        wd.select_by_value(group_id)
         wd.find_element_by_name("add").click()
         wd.find_element_by_link_text("home").click()
 
