@@ -32,7 +32,7 @@ def test_modify_random_contact_db(app, db, check_ui):
     old_contacts = db.get_contact_list()
     index = randrange(len(old_contacts))
     contact.id = old_contacts[index].id
-    app.contact.edit(index, contact)
+    app.contact.edit(id, contact)
     assert len(old_contacts) == app.contact.count()
     new_contacts = db.get_contact_list()
     old_contacts[index] =contact

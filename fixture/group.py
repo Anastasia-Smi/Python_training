@@ -72,6 +72,23 @@ class GroupHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
+    def select_group_from_dropdown(self, index):
+        wd = self.app.wd
+        groups= self.get_group_list()
+        group_id = groups[index].id
+        wd.find_element_by_xpath("//div/select[@name='to_group']").click()
+        wd.select.select_by_value(group_id)
+        wd.find_element_by_name("add").click()
+        wd.find_element_by_link_text("home").click()
+
+    def select_group_from_upper_dropdown(self, index):
+        wd = self.app.wd
+        groups = self.get_group_list()
+        group_id = groups[index].id
+        wd.find_element_by_name("group").click()
+        wd.select.select_by_value(group_id)
+        wd.find_element_by_link_text("home").click()
+
     #CREATE
 
     def create(self, group):
@@ -130,3 +147,10 @@ class GroupHelper:
         wd.find_element_by_name("delete").click()
         self.return_to_group_page()
         self.group_cache = None
+
+    def delete_contacts_from_groups_page(self):
+        wd = self.app.wd
+        wd.find_element_by_id("MassCB").click()
+        wd.find_element_by_xpath("//div/input[@type='button']").click()
+        wd.find_element_by_link_text("home").click()
+

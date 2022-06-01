@@ -41,6 +41,11 @@ class ContactHelper:
         wd.find_element_by_name("email").clear()
         wd.find_element_by_name("email").send_keys(contact.email)
 
+    def select_contact(self, index):
+        wd = self.app.wd
+        wd.find_element_by_link_text("home").click()
+        wd.find_elements_by_xpath("//tbody/tr/td[1]")[index].click()
+
     def count(self):
             wd = self.app.wd
             wd.find_element_by_link_text("home").click()
@@ -108,6 +113,7 @@ class ContactHelper:
         #cell = row.find_elements_by_tag_name("td")[6]
         #cell.find_element_by_tag_name("a").click()
 
+
     # ADD
     def submit_add_contact_form(self):
         # submit contact
@@ -133,7 +139,8 @@ class ContactHelper:
         # fill in add contact form
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
-        wd.find_elements_by_xpath("//tbody/tr/td[8]")[index].click()
+        check_box= wd.find_element_by_xpath("//tbody/tr/td/input[@id='%s']" % index)
+        check_box.find_element_by_xpath("./td[8]").click()
         self.fill_in_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.return_to_contact_page()
