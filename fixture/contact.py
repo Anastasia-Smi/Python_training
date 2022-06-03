@@ -46,6 +46,7 @@ class ContactHelper:
         wd.find_element_by_link_text("home").click()
         wd.find_elements_by_xpath("//tbody/tr/td[1]")[index].click()
 
+
     def count(self):
             wd = self.app.wd
             wd.find_element_by_link_text("home").click()

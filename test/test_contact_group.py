@@ -8,11 +8,14 @@ from model.group import Group
 from model.contact import Contact
 from _datetime import datetime
 from pymysql.converters import decoders
+#task 22
 
 def test_add_contact_to_group(app):
-    contact=app.contact.select_contact(0)
-    app.group.select_group_from_dropdown(2)
-    contacts_in_group_db = ORMFixture.get_contacts_in_group()
+    group_id = app.group.select_group_id()
+    contact = app.contact.select_contact(0)
+    app.group.select_group_by_id_from_drop_down(group_id)
+    app.group.add_contact_to_group()
+    contacts_in_group_db = ORMFixture.get_contacts_in_group(group_id)
     assert(contact in contacts_in_group_db)
 
 

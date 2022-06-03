@@ -1,6 +1,8 @@
 
 from model.group import Group
 from sys import maxsize
+from random import randrange
+from selenium.webdriver.support.ui import Select
 
 class GroupHelper:
     def __init__(self, app):
@@ -72,13 +74,30 @@ class GroupHelper:
             wd.find_element_by_name(field_name).clear()
             wd.find_element_by_name(field_name).send_keys(text)
 
-    def select_group_from_dropdown(self, index):
+    def select_group_id(self):
         wd = self.app.wd
         groups= self.get_group_list()
-        group_id = groups[index].id
-        #wd.find_element_by_css_selector(".right:last-child").click()
-        wd.find_element_by_xpath("//div[@class='right']/select").click()
-        wd.select_by_value(group_id)
+        #group_name= groups[name].name
+        group_id = randrange(len(groups))
+        #group_id = groups[index].id
+        #wd.find_element_by_link_text("home").click()
+        #group_dropdown= wd.find_element_by_xpath("//div[@class='right']/select").click()
+        #group_dropdown.find_element_by_xpath("./option[@value= '%s']"% group_id).click()
+        #group_dropdown.find_element_by_xpath("./option[text()= '%s']"% group_name).click()
+        return group_id
+
+    def select_group_by_id_from_drop_down(self, index):
+        wd = self.app.wd
+        index= self.select_group_id()
+        sel= wd.find_element_by_xpath("//div[@class='right']/select").click()
+        group = sel.select_by_value('%s' %index)
+            #find_element_by_xpath("./option[@value= '%s']"% index)
+        group.click()
+
+
+
+    def add_contact_to_group(self):
+        wd = self.app.wd
         wd.find_element_by_name("add").click()
         wd.find_element_by_link_text("home").click()
 
@@ -86,6 +105,7 @@ class GroupHelper:
         wd = self.app.wd
         groups = self.get_group_list()
         group_id = groups[index].id
+        wd.find_element_by_link_text("home").click()
         wd.find_element_by_name("group").click()
         wd.select.select_by_value(group_id)
         wd.find_element_by_link_text("home").click()

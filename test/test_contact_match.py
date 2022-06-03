@@ -20,6 +20,10 @@ def test_contacts_ui_match_contacts_db(app,db):
 
     contacts_ui = sorted(app.contact.get_contact_list(), key=Contact.id_or_max)
     contacts_db = sorted(db.get_contact_list(), key=Contact.id_or_max)
+
+
+    assert contacts_ui.all_email_from_home_page == merge_emails_like_on_home_page(contacts_db)
+
     assert functools.reduce(lambda x, y: x and y, map(lambda p, q: p == q, contacts_ui, contacts_db), True)
 
 
