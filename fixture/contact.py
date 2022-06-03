@@ -141,7 +141,7 @@ class ContactHelper:
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
         check_box= wd.find_element_by_xpath("//tbody/tr/td/input[@id='%s']" % index)
-        check_box.find_element_by_xpath("./td[8]").click()
+        check_box.find_element_by_xpath("./../../td[8]").click()
         self.fill_in_contact_form(contact)
         wd.find_element_by_name("update").click()
         self.return_to_contact_page()

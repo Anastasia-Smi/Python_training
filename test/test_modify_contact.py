@@ -29,10 +29,11 @@ def test_modify_random_contact_db(app, db, check_ui):
                       email = f"{datetime.datetime.now().strftime('%M')}email@gmail.com")
     if len(db.get_contact_list()) == 0:
         app.contact.add(Contact(contact))
+
     old_contacts = db.get_contact_list()
     index = randrange(len(old_contacts))
-    contact.id = old_contacts[index].id
-    app.contact.edit(id, contact)
+    contact_id = old_contacts[index].id
+    app.contact.edit(contact_id, contact)
     assert len(old_contacts) == app.contact.count()
     new_contacts = db.get_contact_list()
     old_contacts[index] =contact
