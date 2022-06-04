@@ -86,14 +86,14 @@ class GroupHelper:
         #group_dropdown.find_element_by_xpath("./option[text()= '%s']"% group_name).click()
         return group_id
 
-    def select_group_by_id_from_drop_down(self, index):
+    def select_group_by_id_from_drop_down(self, group_id ):
         wd = self.app.wd
-        index= self.select_group_id()
-        sel= wd.find_element_by_xpath("//div[@class='right']/select").click()
-        group = sel.select_by_value('%s' %index)
-            #find_element_by_xpath("./option[@value= '%s']"% index)
-        group.click()
-
+        self.select_group_id()
+        #wd.find_element_by_xpath("//div[@class='right']/select").click()
+        wd.find_element_by_css_selector("select[name='to_group']").click()
+        #group = wd.find_element_by_xpath("./option[@value= '%s']" % group_id).text
+        group= wd.find_element_by_css_selector(">option[value = '%s']" %group_id).click()
+        group.select_by_visible_text('%s' %group).click()
 
 
     def add_contact_to_group(self):
