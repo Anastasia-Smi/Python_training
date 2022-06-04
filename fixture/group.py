@@ -1,3 +1,4 @@
+import random
 
 from model.group import Group
 from sys import maxsize
@@ -77,13 +78,8 @@ class GroupHelper:
     def select_group_id(self):
         wd = self.app.wd
         groups= self.get_group_list()
-        #group_name= groups[name].name
-        group_id = randrange(len(groups))
-        #group_id = groups[index].id
-        #wd.find_element_by_link_text("home").click()
-        #group_dropdown= wd.find_element_by_xpath("//div[@class='right']/select").click()
-        #group_dropdown.find_element_by_xpath("./option[@value= '%s']"% group_id).click()
-        #group_dropdown.find_element_by_xpath("./option[text()= '%s']"% group_name).click()
+        random_group = random.choice(groups)
+        group_id= random_group.id
         return group_id
 
     def select_group_by_id_from_drop_down(self, group_id ):
@@ -92,8 +88,8 @@ class GroupHelper:
         #wd.find_element_by_xpath("//div[@class='right']/select").click()
         wd.find_element_by_css_selector("select[name='to_group']").click()
         #group = wd.find_element_by_xpath("./option[@value= '%s']" % group_id).text
-        group= wd.find_element_by_css_selector(">option[value = '%s']" %group_id).click()
-        group.select_by_visible_text('%s' %group).click()
+        wd.find_element_by_css_selector(">option[value = '%s']" %group_id).click()
+
 
 
     def add_contact_to_group(self):
