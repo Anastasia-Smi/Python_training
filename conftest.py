@@ -10,6 +10,7 @@ import jsonpickle
 from fixture.session import SessionHelper
 from fixture.db import DbFixture
 from fixture.group import Group
+from fixture.contact import Contact
 fixture = None
 target =None
 
@@ -61,6 +62,13 @@ def check_ui(request):
 @pytest.fixture
 def group():
      return Group(name="name", header= "header", footer= "footer", id= str("id"))
+
+@pytest.fixture
+def contact():
+     return Contact(firstname="firstname", lastname= "lastname",
+                    address= "address", all_phones_from_home_page = "all_phones_from_home_page",
+                    all_emails_from_home_page= "all_emails_from_home_page",
+                    id= str("id"))
 
 def pytest_addoption(parser):
     parser.addoption("--browser", action="store", default="chrome")

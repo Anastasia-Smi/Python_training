@@ -11,13 +11,20 @@ from pymysql.converters import decoders
 
 #task 22
 
-def test_add_contact_to_group(app):
-    group_id = app.group.select_group_id()
-    contact = app.contact.select_contact(0)
+def test_add_contact_to_group(app, group,contact):
+
+    group_id = int(app.group.select_group_id())
+    contact_id = app.contact.select_contact_id()
+
+    app.contact.select_contact(contact_id)
 
     app.group.select_group_by_id_from_drop_down(group_id)
     app.group.add_contact_to_group()
-    contacts_in_group_db = ORMFixture.get_contacts_in_group(group_id)
+
+    group.id=group_id
+    contact.id=contact_id
+
+    contacts_in_group_db = ORMFixture.get_contacts_in_group(group)
     assert(contact in contacts_in_group_db)
 
 

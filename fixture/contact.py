@@ -1,4 +1,5 @@
 from model.contact import Contact
+import random
 import re
 
 class ContactHelper:
@@ -44,7 +45,15 @@ class ContactHelper:
     def select_contact(self, index):
         wd = self.app.wd
         wd.find_element_by_link_text("home").click()
-        wd.find_elements_by_xpath("//tbody/tr/td[1]")[index].click()
+        wd.find_element_by_xpath("//td/input[@id='%s']"%index).click()
+
+    def select_contact_id(self):
+        wd = self.app.wd
+        contacts= self.get_contact_list()
+        random_contact = random.choice(contacts)
+        contact_id = int(random_contact.id)
+        return contact_id
+
 
 
     def count(self):

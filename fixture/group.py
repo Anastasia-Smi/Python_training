@@ -88,7 +88,7 @@ class GroupHelper:
         #wd.find_element_by_xpath("//div[@class='right']/select").click()
         wd.find_element_by_css_selector("select[name='to_group']").click()
         #group = wd.find_element_by_xpath("./option[@value= '%s']" % group_id).text
-        wd.find_element_by_css_selector(">option[value = '%s']" %group_id).click()
+        wd.find_element_by_css_selector("[name='to_group']>option[value = '%s']" %group_id).click()
 
 
 
