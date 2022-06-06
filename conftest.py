@@ -11,6 +11,8 @@ from fixture.session import SessionHelper
 from fixture.db import DbFixture
 from fixture.group import Group
 from fixture.contact import Contact
+from fixture.orm import ORMFixture
+
 fixture = None
 target =None
 
@@ -37,6 +39,17 @@ def app(request):
 def db(request):
    db_config = load_config(request.config.getoption("--target"))['db']
    dbfixture=DbFixture(host=db_config['host'],user=  db_config['user'],
+                       name=db_config['name'],
+                       password= db_config['password'])
+   def fin():
+        dbfixture.destroy()
+   request.addfinalizer(fin)
+   return dbfixture
+
+@pytest.fixture(scope="session")
+def ormDB(request):
+   db_config = load_config(request.config.getoption("--target"))['db']
+   dbfixture=ORMFixture(host=db_config['host'],user=  db_config['user'],
                        name=db_config['name'],
                        password= db_config['password'])
    def fin():
