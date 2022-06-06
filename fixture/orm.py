@@ -10,9 +10,9 @@ class ORMFixture:
     class ORMGroup(db.Entity):
         _table_ = 'group_list'
         id = PrimaryKey(int, column='group_id')
-        name = Optional(str, column='group_id')
-        header = Optional(str, column='group_id')
-        footer = Optional(str, column='group_id')
+        name = Optional(str, column='group_name')
+        header = Optional(str, column='group_header')
+        footer = Optional(str, column='group_footer')
         contacts= Set(lambda: ORMFixture.ORMContact, table= "address_in_groups",
                       column= "id", reverse= "groups", lazy= True)
 
